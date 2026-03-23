@@ -37,7 +37,7 @@ module terminal_io
 
 contains
 
-    subroutine enter_raw_mode()
+    subroutine enter_raw_mode() bind(c, name="enter_raw_mode")
         type(termios) :: raw
         integer(c_int) :: res
 

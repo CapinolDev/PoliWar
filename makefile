@@ -1,13 +1,14 @@
 FC = gfortran
 FFLAGS = -shared -fPIC
-TARGET_LIB = PoliWar/bin/Debug/net10.0/libfUtils.so
-FORTRAN_SRC = fUtils.f95
+TARGET_DIR = PoliWar/bin/Debug/net10.0/
+TARGET_LIB = $(TARGET_DIR)libfUtils.so
+
+FORTRAN_SRC = terminalio.f95 ui.f95 input.f95 fUtils.f95 
 
 all: $(TARGET_LIB) build_dotnet
 
-
 $(TARGET_LIB): $(FORTRAN_SRC)
-	mkdir -p PoliWar/bin/Debug/net10.0/
+	mkdir -p $(TARGET_DIR)
 	$(FC) $(FFLAGS) -o $(TARGET_LIB) $(FORTRAN_SRC)
 
 build_dotnet:
@@ -15,4 +16,5 @@ build_dotnet:
 
 clean:
 	rm -f $(TARGET_LIB)
+	rm -f *.mod
 	rm -rf PoliWar/bin PoliWar/obj
