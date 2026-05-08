@@ -57,6 +57,7 @@ module utils
 		character(len=1) :: fetch_actionF
 		fetch_actionF = get_key() // c_null_char
 	end function fetch_actionF
+	
 	subroutine move_cursorF(x,y) bind(c,name='FmoveCursor')
 		integer(c_int), value :: x,y
 		call move_cursor(int(x),int(y))
