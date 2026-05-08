@@ -1,161 +1,13 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using Poliwar.Policies;
+
+namespace Poliwar{
 class Program
 {
     
-    class GameState {
-        public int currScene;
-        public bool isInWar;
-        public Population population;
-        public double taxRate;
-        public int chaos = 0;
-        public int order = 100;
-        public PublicReception publicView; 
-        public GameState(int scene, bool inWar, Population population, double taxRate) {
-            this.currScene = scene;
-            this.isInWar = inWar;
-            this.population = population;
-            this.taxRate = taxRate;
-        }
-    }
-	class Population {
-		public int totalPopulation;
-		public int greenPopulation;
-		public int bluePopulation;
-		public int redPopulation;
-		public Population(int tot,int red, int green, int blue) {
-			this.totalPopulation = tot;
-			this.greenPopulation = green;
-			this.bluePopulation = blue;
-			this.redPopulation = red;
-			}
-		}
-    class PublicReception {
-        public int publicLike;
-        public int publicNeutral;
-        public int publicHate;
-        public PublicReception(int like, int neutral, int hate) {
-            this.publicLike = like;
-            this.publicNeutral = neutral;
-            this.publicHate = hate;
-        }
-    }
     
-    class PolicyFactory{
-		
-		private List<Policy> _policies;
-		public PolicyFactory(){
-			_policies= new List<Policy>(){
-				new DecreaseTaxPolicy(),
-				new IncreaseTaxPolicy(),
-				new RemoveOppositionPolicy()
-				};
-			}
-			
-		public List<Policy> Policies{
-			get
-			{
-				return _policies;
-			}
-		}
-		
-		public List<Policy> GetRandom(int count){
-			Random rnd = new Random();
 
-			var result= new List<Policy>();
-					
-			for(var i=0;i<count; i++){
-				var randPolicy=rnd.Next(_policies.Count);
-				result.Add(_policies[randPolicy]);
-			}
-			return result;
-			
-	   }
-			
-	}
-    
-	abstract class Policy {
-		public string label;
-		public Policy(string label) {
-			this.label = label;
-			}
-			
-		public abstract void Execute(GameState state);
-		}
-			
-	class DecreaseTaxPolicy: Policy{
-		
-		public DecreaseTaxPolicy():base("decrease_tax") {
-			}
-
-
-		public override void Execute(GameState state){
-			state.taxRate -= 1;
-							
-			int gainLikers = (int)Math.Round(state.population.totalPopulation * 0.03);
-			
-			gainLikers = Math.Min(gainLikers, state.publicView.publicNeutral);
-			
-			state.publicView.publicNeutral -= gainLikers;
-			state.publicView.publicLike += gainLikers;
-			
-			}
-		}
-
-	class IncreaseTaxPolicy: Policy{
-
-		public IncreaseTaxPolicy():base("increase_tax") {
-				}
-
-
-		public override void Execute(GameState state){
-
-		state.taxRate += 1;
-		
-		
-		int gainHaters = (int)Math.Round(state.population.totalPopulation * 0.03);
-		
-		gainHaters = Math.Min(gainHaters, state.publicView.publicNeutral);
-		
-		state.publicView.publicNeutral -= gainHaters;
-		state.publicView.publicHate += gainHaters;
-
-
-			}
-		}
-		
-	class RemoveOppositionPolicy: Policy{
-				public RemoveOppositionPolicy():base("remove_opposition") {
-				}
-
-		public override void Execute(GameState state){
-
-			int totalHate = state.publicView.publicHate;
-			int totalPopBefore = state.population.totalPopulation;
-
-			if (totalPopBefore > 0 && totalHate > 0) {
-				
-				double reductionRatio = (double)totalHate / totalPopBefore;
-				state.population.redPopulation -= (int)Math.Round(state.population.redPopulation * reductionRatio);
-				state.population.greenPopulation -= (int)Math.Round(state.population.greenPopulation * reductionRatio);
-				state.population.bluePopulation -= (int)Math.Round(state.population.bluePopulation * reductionRatio);
-				state.population.redPopulation = Math.Max(0, state.population.redPopulation);
-				state.population.greenPopulation = Math.Max(0, state.population.greenPopulation);
-				state.population.bluePopulation = Math.Max(0, state.population.bluePopulation);
-				state.population.totalPopulation = state.population.redPopulation + 
-												   state.population.greenPopulation + 
-												   state.population.bluePopulation;
-			}
-
-
-			state.publicView.publicHate = state.publicView.publicNeutral;
-			state.publicView.publicNeutral = 0;
-							
-
-
-
-			}
-		}
 
 	class Fertility {
 		public double total = 4.5;
@@ -202,9 +54,6 @@ class Program
         int currMoney = 1000;
         int remainingTimeInOffice = 90;
         int pickedPolicy = -1;
-        int idx1;
-        int idx2;
-        int idx3;
         int avgWage = 10;
         bool actionSwitched = false;
         bool policySelected = false;
@@ -392,3 +241,4 @@ class Program
 	
 }
  
+}
