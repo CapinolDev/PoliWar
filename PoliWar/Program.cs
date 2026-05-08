@@ -57,16 +57,9 @@ class Program
         int avgWage = 10;
         bool actionSwitched = false;
         bool policySelected = false;
-        
 
 		var policyFactory= new PolicyFactory();
 		var pickedPolicies= policyFactory.GetRandom(3);
-
-		for(var i=0; i<policyFactory.Policies.Count; i++)
-		{
-			FmoveCursor(i*2+5,3);
-			Console.Write($"{(i+1)}.{policyFactory.Policies[i].label}");
-		}
 
         while (currAction != GAME_EXIT) {
             if (actionSwitched) {
@@ -167,6 +160,15 @@ class Program
 		bool policySelected,
 		int currMoney,
 		int remainingTimeInOffice){
+
+		var policyFactory= new PolicyFactory();
+
+		for(var i=0; i<policyFactory.Policies.Count; i++)
+				{
+					FmoveCursor(i*2+5,3);
+					Console.Write($"{(i+1)}.{policyFactory.Policies[i].label}");
+				}
+
         FdrawBox(1, 1, 35, 2, "Days remaining: " + remainingTimeInOffice);
 		FdrawBox(3, 1, 35, 20, "Policies");
 
