@@ -1,7 +1,7 @@
 using Poliwar;
 namespace Poliwar.Policies{
 public class RemoveOppositionPolicy: Policy{
-				public RemoveOppositionPolicy():base("remove_opposition") {
+				public RemoveOppositionPolicy():base("remove opposition") {
 				}
 
 		public override void Execute(GameState state){

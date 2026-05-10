@@ -2,7 +2,7 @@ using Poliwar;
 namespace Poliwar.Policies{
 public class IncreaseTaxPolicy: Policy{
 
-		public IncreaseTaxPolicy():base("increase_tax") {
+		public IncreaseTaxPolicy():base("increase tax by 1%") {
 				}
 
 

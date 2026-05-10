@@ -7,7 +7,19 @@ namespace Poliwar.Policies{
 			_policies= new List<Policy>(){
 				new DecreaseTaxPolicy(),
 				new IncreaseTaxPolicy(),
-				new RemoveOppositionPolicy()
+				new RemoveOppositionPolicy(),
+				new LenghtenPositionPolicy(),
+				new AntiRedPropaganda(),
+				new AntiGreenPropaganda(),
+				new AntiBluePropaganda(),
+				new BetterSchools(),
+				new GenocideRed(),
+				new GenocideGreen(),
+				new GenocideBlue(),
+				new NationalPropaganda(),
+				new RedPropaganda(),
+				new GreenPropaganda(),
+				new BluePropaganda()
 				};
 			}
 			

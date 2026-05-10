@@ -3,7 +3,7 @@ namespace Poliwar.Policies{
 
 public class DecreaseTaxPolicy: Policy{
 		
-		public DecreaseTaxPolicy():base("decrease_tax") {
+		public DecreaseTaxPolicy():base("decrease tax by 1%") {
 			}
 
 
